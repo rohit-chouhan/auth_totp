@@ -1,5 +1,3 @@
-# Auth TOTP
-
 A fast and easy-to-use time-based one-time password (TOTP) authentication package for your Flutter application. It is compatible with `Google Authenticator`, `1Password`, `LastPass`, `Microsoft Authenticator` and various other authenticator apps.
 
 ![Auth TOTP Banner](https://github.com/rohit-chouhan/auth_otp/assets/34239087/f22d91d0-452c-473a-87b7-a26107985df1)
