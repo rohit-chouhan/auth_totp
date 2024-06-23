@@ -6,13 +6,13 @@ A fast and easy-to-use time-based one-time password (TOTP) authentication packag
 
 ## Get Started
 
-- [Create Secret Key](#create-secret-key)
-- [Verify TOTP Code](#verify-totp-code)
-- [Generate TOTP Code](#generate-totp-code)
-- [Get QR Code to Scan](#get-qr-code-to-scan)
-- [Tested Authenticator Apps](#tested-authenticator-apps)
-- [Full Example](#full-example)
-- [Report bugs or issues](#report-bugs-or-issues)
+- [🔑 Create Secret Key](#create-secret-key)
+- [✔️ Verify TOTP Code](#verify-totp-code)
+- [🚀 Generate TOTP Code](#generate-totp-code)
+- [📸 Get QR Code to Scan](#get-qr-code-to-scan)
+- [🔐Tested Authenticator Apps](#tested-authenticator-apps)
+- [🔐 Full Example](#full-example)
+- [🐛 Report bugs or issues](#report-bugs-or-issues)
 
 ## Create Secret Key
 
