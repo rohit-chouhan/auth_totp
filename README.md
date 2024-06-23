@@ -10,7 +10,7 @@ A fast and easy-to-use time-based one-time password (TOTP) authentication packag
 - [✔️ Verify TOTP Code](#verify-totp-code)
 - [🚀 Generate TOTP Code](#generate-totp-code)
 - [📸 Get QR Code to Scan](#get-qr-code-to-scan)
-- [🔐Tested Authenticator Apps](#tested-authenticator-apps)
+- [🔐 Tested Authenticator Apps](#tested-authenticator-services)
 - [🔐 Full Example](#full-example)
 - [🐛 Report bugs or issues](#report-bugs-or-issues)
 
