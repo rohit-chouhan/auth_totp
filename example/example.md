@@ -2,7 +2,7 @@ Here the example of all method, enjoy coding 😃
 
 ```dart
 import 'package:flutter/material.dart';
-import 'auth_otp.dart';
+import 'auth_totp.dart';
 
 void main() {
   runApp(
@@ -21,7 +21,7 @@ class QRCodePage extends StatefulWidget {
 }
 
 class _QRCodePageState extends State<QRCodePage> {
-  String secret = AuthOTP.createSecret();
+  String secret = AuthTOTP.createSecret();
   String appName = "TOTP"; //Give your app name
 
   @override
@@ -43,7 +43,7 @@ class _QRCodePageState extends State<QRCodePage> {
                 "Scan this QR code or copy the secret code to your authenticator app. Click continue to verify."),
           ),
           Image.network(
-              AuthOTP.getQRCodeUrl(appName: appName, secretKey: secret)),
+              AuthTOTP.getQRCodeUrl(appName: appName, secretKey: secret)),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -71,8 +71,8 @@ class _QRCodePageState extends State<QRCodePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            secret = AuthOTP.createSecret();
-            print(AuthOTP.generateTOTPCode(secretKey: secret, interval: 30));
+            secret = AuthTOTP.createSecret();
+            print(AuthTOTP.generateTOTPCode(secretKey: secret, interval: 30));
           });
         },
         child: const Icon(Icons.refresh),
@@ -124,7 +124,7 @@ class _VerificationPageState extends State<VerificationPage> {
             ElevatedButton(
               onPressed: () {
                 setState(() {
-                  if (AuthOTP.verifyCode(
+                  if (AuthTOTP.verifyCode(
                       secretKey: widget.secret, totpCode: code)) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text("Congratulations, TOTP is correct"),

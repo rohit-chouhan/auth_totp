@@ -1,11 +1,11 @@
-library auth_otp;
+library auth_totp;
 
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 
 // Auth TOTP
-class AuthOTP {
+class AuthTOTP {
   /// The secret is generated using the Base32 alphabet and is suitable for
   /// use in TOTP (Time-based One-Time Password) applications.
   ///
