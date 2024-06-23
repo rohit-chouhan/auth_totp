@@ -1,0 +1,29 @@
+name: auth_otp
+description: "A fast and easy-to-use time-based one-time password (TOTP) authentication package for your Flutter application."
+version: 1.0.0
+homepage:
+
+environment:
+  sdk: ">=3.4.3 <4.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  crypto: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+screenshots:
+  - description: "Auth OTP Logo"
+    path: logo.jpg
+
+topics:
+  - totp
+  - otp
+  - time-based
+  - authentication
+  - authentication-app
