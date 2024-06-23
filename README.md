@@ -107,7 +107,7 @@ Absolutely, it works with all authenticator apps. But feel free to contribute if
 
 ## Full Example
 
-👉 For a complete example, refer to the [Auth OTP package documentation](https://pub.dev/packages/auth_totp/example).
+👉 For a complete example, refer to the [Auth TOTP package documentation](https://pub.dev/packages/auth_totp/example).
 
 ## Report bugs or issues
 
