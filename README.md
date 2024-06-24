@@ -14,15 +14,28 @@ A fast and easy-to-use time-based one-time password (TOTP) authentication packag
 
 ## Create Secret Key
 
-🔑 This method generates a random `Base32` secret key, which is used to create verify codes from authentication apps.
+🔑 This method generates a random secret key, which is used to create verify codes from authentication apps.
 
 ```dart
-String secret = AuthTOTP.createSecret(); //32 charater by default
-//or
-String secret = AuthTOTP.createSecret(20); //with length limit 20 charater
+String secret = AuthTOTP.createSecret(
+    length: 16,
+    autoPadding: true,
+    secretKeyStyle: SecretKeyStyle.upperLowerCase
+);
+
+//output :  xHu6 nh7I D8uI s9B1
 ```
 
-This method accepts a single parameter to specify the length of the secret key. By default, it generates a 32-character Base32 secret key. The length limit is between `16` to `32` characters.
+- `length` : The length of the secret to generate. Must be between 16 and 255, Default is 32.
+- `autoPadding` : If true, it will create a secret with a letter by 4 sections, Default is false.
+- `secretKeyStyle` : SecretKeyStyle is used to set the case of the secret key. Default is upperCase.
+
+  - enum `SecretKeyStyle`
+    - `upperCase` : Secret key will be upper case
+    - `lowerCase` : Secret key will be lower case
+    - `upperLowerCase` : Secret key will be upper and lower both case
+
+This method accepts a single parameter to specify the length of the secret key. By default, it generates a 32-character secret key. The length limit is between `16` to `255` characters.
 
 ## Verify TOTP Code
 
@@ -33,12 +46,14 @@ Use this method after the user has scanned a QR code or entered the secret key i
 ```dart
 bool checkOTP = AuthTOTP.verifyCode({
     secretKey: "secret_key_here",
-    totpCode: "totp_code_here_by_user"
+    totpCode: "totp_code_here_by_user",
+    interval: 30
 });
 ```
 
 - `secretKey`: A secret key generate by createSecret method
 - `totpCode`: The TOTP code entered by the user.
+- `interval`: Time interval in seconds, default is 30
 
 It will return true if code is correct, otherwise false.
 
@@ -83,7 +98,7 @@ if(generatedTOTPCode === inputedOTP){
 String qrCodeUrl =  AuthTOTP.getQRCodeUrl({
     appName: "your app name"
     secretKey: "secret_key_here",
-    issuer:"auth_otp"
+    issuer:"auth_totp"
 });
 
 //Image.Network(qrCodeUrl);
@@ -91,7 +106,7 @@ String qrCodeUrl =  AuthTOTP.getQRCodeUrl({
 
 - `appName`: App name, or any text
 - `secretKey`: A secret key generate by `createSecret` method
-- `issuer`: Issuer name, default is `auth_otp`
+- `issuer`: Issuer name, default is `auth_totp`
 
 ## Tested Authenticator Services
 

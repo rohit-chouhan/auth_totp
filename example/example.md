@@ -1,8 +1,8 @@
 Here the example of all method, enjoy coding 😃
 
 ```dart
+import 'package:auth_totp/auth_totp.dart';
 import 'package:flutter/material.dart';
-import 'auth_totp.dart';
 
 void main() {
   runApp(
@@ -21,7 +21,10 @@ class QRCodePage extends StatefulWidget {
 }
 
 class _QRCodePageState extends State<QRCodePage> {
-  String secret = AuthTOTP.createSecret();
+  String secret = AuthTOTP.createSecret(
+      length: 16,
+      autoPadding: true,
+      secretKeyStyle: SecretKeyStyle.upperLowerCase);
   String appName = "TOTP"; //Give your app name
 
   @override
@@ -71,7 +74,11 @@ class _QRCodePageState extends State<QRCodePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            secret = AuthTOTP.createSecret();
+            secret = AuthTOTP.createSecret(
+                length: 16,
+                autoPadding: true,
+                secretKeyStyle: SecretKeyStyle.upperLowerCase);
+            ;
             print(AuthTOTP.generateTOTPCode(secretKey: secret, interval: 30));
           });
         },
