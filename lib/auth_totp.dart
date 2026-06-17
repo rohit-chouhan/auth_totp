@@ -68,9 +68,10 @@ class AuthTOTP {
     final chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final rnd = Random.secure();
     final codes = <String>[];
-    
+
     for (int i = 0; i < count; i++) {
-      var code = List.generate(length, (_) => chars[rnd.nextInt(chars.length)]).join();
+      var code =
+          List.generate(length, (_) => chars[rnd.nextInt(chars.length)]).join();
       if (length >= 8 && length % 2 == 0) {
         final half = length ~/ 2;
         code = '${code.substring(0, half)}-${code.substring(half)}';
@@ -82,7 +83,10 @@ class AuthTOTP {
 
   /// Generates an OTP code based on the provided secret and interval.
   static String generateTOTPCode(
-      {required String secretKey, required int interval, int digits = 6, OTPAlgorithm algorithm = OTPAlgorithm.sha1}) {
+      {required String secretKey,
+      required int interval,
+      int digits = 6,
+      OTPAlgorithm algorithm = OTPAlgorithm.sha1}) {
     if (secretKey.length < 16 || secretKey.length > 255) {
       throw ArgumentError('The length of the secret must be 16 to 255.');
     }
@@ -111,7 +115,10 @@ class AuthTOTP {
 
   /// Generates an HMAC-based One-Time Password (HOTP) code based on the provided secret and counter.
   static String generateHOTPCode(
-      {required String secretKey, required int counter, int digits = 6, OTPAlgorithm algorithm = OTPAlgorithm.sha1}) {
+      {required String secretKey,
+      required int counter,
+      int digits = 6,
+      OTPAlgorithm algorithm = OTPAlgorithm.sha1}) {
     if (secretKey.length < 16 || secretKey.length > 255) {
       throw ArgumentError('The length of the secret must be 16 to 255.');
     }
@@ -120,12 +127,17 @@ class AuthTOTP {
 
   /// Verifies a given HOTP code against a secret key and a counter.
   static bool verifyHOTPCode(
-      {required String secretKey, required String hotpCode, required int counter, int digits = 6, OTPAlgorithm algorithm = OTPAlgorithm.sha1}) {
+      {required String secretKey,
+      required String hotpCode,
+      required int counter,
+      int digits = 6,
+      OTPAlgorithm algorithm = OTPAlgorithm.sha1}) {
     return _generateOTP(secretKey, counter, digits, algorithm) == hotpCode;
   }
 
   /// Core OTP generation method (used by both TOTP and HOTP).
-  static String _generateOTP(String secret, int counter, int digits, OTPAlgorithm algorithm) {
+  static String _generateOTP(
+      String secret, int counter, int digits, OTPAlgorithm algorithm) {
     secret = secret.replaceAll(RegExp(r'[ -]'), '');
     final timeBytes = Uint8List(8);
     for (int i = 7, t = counter; i >= 0; i--) {
@@ -133,7 +145,7 @@ class AuthTOTP {
       t >>= 8;
     }
     final secretBytes = _base32Decode(secret);
-    
+
     Hash hashAlgo;
     switch (algorithm) {
       case OTPAlgorithm.sha256:
@@ -146,7 +158,7 @@ class AuthTOTP {
         hashAlgo = sha1;
         break;
     }
-    
+
     final hmac = Hmac(hashAlgo, secretBytes);
     final hash = hmac.convert(timeBytes).bytes;
 
@@ -188,19 +200,21 @@ class AuthTOTP {
     if (uri.scheme != 'otpauth') {
       throw FormatException('Invalid URI scheme: ${uri.scheme}');
     }
-    
+
     final type = uri.host; // totp or hotp
-    final path = Uri.decodeComponent(uri.path).replaceFirst('/', ''); // remove leading slash
-    
+    final path = Uri.decodeComponent(uri.path)
+        .replaceFirst('/', ''); // remove leading slash
+
     final params = uri.queryParameters;
     final secret = params['secret'];
     if (secret == null) {
       throw FormatException('Missing secret in URI');
     }
-    
+
     final issuer = params['issuer'];
-    final digits = params.containsKey('digits') ? int.parse(params['digits']!) : 6;
-    
+    final digits =
+        params.containsKey('digits') ? int.parse(params['digits']!) : 6;
+
     OTPAlgorithm algorithm = OTPAlgorithm.sha1;
     if (params.containsKey('algorithm')) {
       final algoStr = params['algorithm']!.toUpperCase();
@@ -210,9 +224,11 @@ class AuthTOTP {
         algorithm = OTPAlgorithm.sha512;
       }
     }
-    
-    int? period = params.containsKey('period') ? int.parse(params['period']!) : null;
-    int? counter = params.containsKey('counter') ? int.parse(params['counter']!) : null;
+
+    int? period =
+        params.containsKey('period') ? int.parse(params['period']!) : null;
+    int? counter =
+        params.containsKey('counter') ? int.parse(params['counter']!) : null;
 
     return OTPAuthURI(
       type: type,
@@ -237,20 +253,21 @@ class AuthTOTP {
       'secret': secretKey,
       if (issuer != null) 'issuer': issuer,
       if (digits != 6) 'digits': digits.toString(),
-      if (algorithm != OTPAlgorithm.sha1) 'algorithm': algorithm.name.toUpperCase(),
+      if (algorithm != OTPAlgorithm.sha1)
+        'algorithm': algorithm.name.toUpperCase(),
     };
-    
+
     final otpauthUri = Uri(
       scheme: 'otpauth',
       host: 'totp',
       path: '/$appName',
       queryParameters: queryParameters,
     );
-    
+
     final qrUri = Uri.https('api.qrserver.com', '/v1/create-qr-code/', {
       'data': otpauthUri.toString(),
     });
-    
+
     return qrUri.toString();
   }
 
@@ -268,10 +285,11 @@ class AuthTOTP {
       'secret': secretKey,
       if (issuer != null) 'issuer': issuer,
       if (digits != 6) 'digits': digits.toString(),
-      if (algorithm != OTPAlgorithm.sha1) 'algorithm': algorithm.name.toUpperCase(),
+      if (algorithm != OTPAlgorithm.sha1)
+        'algorithm': algorithm.name.toUpperCase(),
       if (type == 'hotp' && counter != null) 'counter': counter.toString(),
     };
-    
+
     final otpauthUri = Uri(
       scheme: 'otpauth',
       host: type,
@@ -279,7 +297,8 @@ class AuthTOTP {
       queryParameters: queryParameters,
     );
 
-    return QrCode.fromData(data: otpauthUri.toString(), errorCorrectLevel: QrErrorCorrectLevel.M);
+    return QrCode.fromData(
+        data: otpauthUri.toString(), errorCorrectLevel: QrErrorCorrectLevel.M);
   }
 
   static String _autoPadding(String input) {
