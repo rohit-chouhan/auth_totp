@@ -78,7 +78,6 @@ class _QRCodePageState extends State<QRCodePage> {
                 length: 16,
                 autoPadding: true,
                 secretKeyStyle: SecretKeyStyle.upperLowerCase);
-            ;
             print(AuthTOTP.generateTOTPCode(secretKey: secret, interval: 30));
           });
         },

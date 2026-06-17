@@ -1,6 +1,6 @@
 name: auth_totp
 description: "A fast and easy-to-use time-based one-time password (TOTP) authentication package for your Flutter application."
-version: 1.0.1
+version: 2.0.0
 homepage: https://github.com/rohit-chouhan/auth_totp
 
 environment:
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   crypto: ^3.0.3
+  qr: ^3.0.2
 
 dev_dependencies:
   flutter_test:
